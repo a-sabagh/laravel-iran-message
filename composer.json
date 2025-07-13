@@ -1,13 +1,7 @@
 {
     "name": "a-sabagh/laravel-iran-message",
     "description": "Laravel message service compatible with iran message provider",
-    "keywords": [
-        "message",
-        "sms",
-        "iran-sms",
-        "iran-message",
-        "laravel"
-    ],
+    "keywords": [ "message", "sms", "iran-sms", "iran-message", "laravel" ],
     "license": "MIT",
     "homepage": "https://laravel.com",
     "support": {
@@ -24,12 +18,13 @@
     "require": {
         "php": "^7.2|^8.0",
         "guzzlehttp/guzzle": "^6.0|^7.0",
-        "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0"
+        "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+        "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0|^9.3"
+        "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^8.0|^9.3|^10.4|^11.5"
     },
     "autoload": {
         "psr-4": {

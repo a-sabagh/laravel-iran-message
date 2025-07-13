@@ -2,8 +2,8 @@
 
 namespace IRMessage;
 
-use Illuminate\Support\ServiceProvider;
 use IRMessage\Contracts\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class MessageServiceProvider extends ServiceProvider
 {
