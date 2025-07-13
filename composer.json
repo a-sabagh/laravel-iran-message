@@ -1,0 +1,59 @@
+{
+    "name": "a-sabagh/laravel-iran-message",
+    "description": "Laravel message service compatible with iran message provider",
+    "keywords": [
+        "message",
+        "sms",
+        "iran-sms",
+        "iran-message",
+        "laravel"
+    ],
+    "license": "MIT",
+    "homepage": "https://laravel.com",
+    "support": {
+        "issues": "https://github.com/a-sabagh/laravel-iran-message/issues",
+        "source": "https://github.com/a-sabagh/laravel-iran-message"
+    },
+    "authors": [
+        {
+            "name": "Abolfazl Sabagh",
+            "email": "info@asabagh.ir",
+            "homepage": "http://asabagh.ir"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^8.0",
+        "guzzlehttp/guzzle": "^6.0|^7.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0|^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "IRMessage\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IRMessage\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IRMessage\\MessageServiceProvider"
+            ],
+            "aliases": {
+                "IRMessage": "IRMessage\\Facades\\Message"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
