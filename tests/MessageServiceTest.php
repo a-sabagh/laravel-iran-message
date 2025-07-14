@@ -41,4 +41,11 @@ class MessageServiceTest extends TestCase
 
         $this->assertInstanceOf(LogDriver::class, $logDriver);
     }
+
+    public function test_instanciate_default_driver(): void
+    {
+        $defaultDriver = $this->app->make(Factory::class)->driver();
+
+        $this->assertInstanceOf(LogDriver::class, $defaultDriver);
+    }
 }
