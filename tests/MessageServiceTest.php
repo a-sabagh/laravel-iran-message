@@ -4,7 +4,7 @@ namespace Tests;
 
 use IRMessage\MessageManager;
 use IRMessage\Contracts\Factory;
-use IRMessage\Driver\LogDriver;
+use IRMessage\Drivers\LogDriver;
 use Orchestra\Testbench\TestCase;
 use IRMessage\MessageServiceProvider;
 

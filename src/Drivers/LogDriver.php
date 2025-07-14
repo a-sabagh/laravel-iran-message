@@ -1,6 +1,6 @@
 <?php
 
-namespace IRMessage\Driver;
+namespace IRMessage\Drivers;
 
 use IRMessage\Contracts\Driver;
 

@@ -5,7 +5,7 @@ namespace IRMessage;
 use Illuminate\Support\Manager;
 use IRMessage\Contracts\Driver;
 use IRMessage\Contracts\Factory;
-use IRMessage\Driver\LogDriver;
+use IRMessage\Drivers\LogDriver;
 
 class MessageManager extends Manager implements Factory
 {
