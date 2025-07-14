@@ -6,6 +6,7 @@ use Illuminate\Support\Manager;
 use IRMessage\Contracts\Driver;
 use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
+use IRMessage\Drivers\ArrayDriver;
 
 class MessageManager extends Manager implements Factory
 {
@@ -17,5 +18,10 @@ class MessageManager extends Manager implements Factory
     public function createLogDriver(): Driver
     {
         return new LogDriver;
+    }
+
+    public function createArrayDriver(): Driver
+    {
+        return new ArrayDriver;
     }
 }

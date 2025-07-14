@@ -6,6 +6,7 @@ use IRMessage\MessageManager;
 use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
 use Orchestra\Testbench\TestCase;
+use IRMessage\Drivers\ArrayDriver;
 use IRMessage\MessageServiceProvider;
 
 class MessageServiceTest extends TestCase
@@ -44,8 +45,17 @@ class MessageServiceTest extends TestCase
 
     public function test_instanciate_default_driver(): void
     {
+        $this->app->config->set('irmessage.default', 'log');
+
         $defaultDriver = $this->app->make(Factory::class)->driver();
 
         $this->assertInstanceOf(LogDriver::class, $defaultDriver);
+    }
+
+    public function test_instanciate_array_driver(): void
+    {
+        $arrayDriver = $this->app->make(Factory::class)->driver('array');
+
+        $this->assertInstanceOf(ArrayDriver::class, $arrayDriver);
     }
 }
