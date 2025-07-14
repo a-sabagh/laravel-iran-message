@@ -4,9 +4,10 @@ namespace IRMessage;
 
 use Illuminate\Support\Manager;
 use IRMessage\Contracts\Driver;
+use IRMessage\Contracts\Factory;
 use IRMessage\Driver\LogDriver;
 
-class MessageManager extends Manager
+class MessageManager extends Manager implements Factory
 {
     public function getDefaultDriver()
     {
