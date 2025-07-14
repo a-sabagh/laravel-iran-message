@@ -8,6 +8,6 @@ class MessageManager extends Manager
 {
     public function getDefaultDriver()
     {
-        
+        return $this->config['irmessage']['default'];
     }
 }

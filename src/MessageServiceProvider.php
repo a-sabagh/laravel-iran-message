@@ -13,4 +13,11 @@ class MessageServiceProvider extends ServiceProvider
             return new MessageManager($app);
         });
     }
+
+    public function boot(): void
+    {
+        $this->publishes([
+            __DIR__ . '/../config/irmessage.php' => config_path('irmessage.php'),
+        ]);
+    }
 }

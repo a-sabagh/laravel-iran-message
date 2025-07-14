@@ -9,6 +9,11 @@ use IRMessage\MessageServiceProvider;
 
 class MessageServiceTest extends TestCase
 {
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('irmessage.default', 'log');
+    }
+
     protected function getPackageProviders($app)
     {
         return [
@@ -20,5 +25,12 @@ class MessageServiceTest extends TestCase
     {
         $messageService = $this->app->make(Factory::class);
         $this->assertInstanceOf(MessageManager::class, $messageService);
+    }
+
+    public function test_message_manager_default_config(): void
+    {
+        $defaultDriver = $this->app->make(Factory::class)->getDefaultDriver();
+
+        $this->assertSame('log', $defaultDriver);
     }
 }
