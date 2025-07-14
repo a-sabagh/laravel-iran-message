@@ -4,6 +4,7 @@ namespace Tests;
 
 use IRMessage\MessageManager;
 use IRMessage\Contracts\Factory;
+use IRMessage\Driver\LogDriver;
 use Orchestra\Testbench\TestCase;
 use IRMessage\MessageServiceProvider;
 
@@ -32,5 +33,12 @@ class MessageServiceTest extends TestCase
         $defaultDriver = $this->app->make(Factory::class)->getDefaultDriver();
 
         $this->assertSame('log', $defaultDriver);
+    }
+
+    public function test_instanciate_log_driver(): void
+    {
+        $logDriver = $this->app->make(Factory::class)->driver('log');
+
+        $this->assertInstanceOf(LogDriver::class, $logDriver);
     }
 }
