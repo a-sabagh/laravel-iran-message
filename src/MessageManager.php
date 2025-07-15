@@ -22,6 +22,8 @@ class MessageManager extends Manager implements Factory
 
     public function createArrayDriver(): Driver
     {
-        return new ArrayDriver;
+        $config = $this->config->get('irmessage.drivers.array');
+
+        return new ArrayDriver(collect($config));
     }
 }

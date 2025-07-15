@@ -38,6 +38,7 @@ class MessageServiceTest extends TestCase
     public function test_message_manager_default_config(): void
     {
         $this->app->config->set('irmessage.default', 'log');
+
         $defaultDriver = $this->app->make(Factory::class)->getDefaultDriver();
 
         $this->assertSame('log', $defaultDriver);

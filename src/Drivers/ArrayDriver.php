@@ -3,6 +3,7 @@
 namespace IRMessage\Drivers;
 
 use IRMessage\Contracts\Driver;
+use Illuminate\Support\Collection;
 
 class ArrayDriver implements Driver
 {
@@ -19,4 +20,46 @@ class ArrayDriver implements Driver
      * @var \Illuminate\Support\Collection
      */
     protected $messages;
+
+    /**
+     * Create a new array driver instance.
+     */
+    public function __construct(Collection $config){
+        $this->config = $config;
+
+        $this->messages = new Collection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function send(array|string $recipients, string $message, array $args = [], string $from = null): void
+    {
+        $this->messages[] = [
+            'recipients' => (array) $recipients,
+            'message' => $message,
+            'args' => $args,
+            'from' => $from ?? $this->config->get('from')
+        ];
+    }
+
+    /**
+     * Retrieve the collection of messages.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function messages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Clear all of the messages from the local collection.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function flush()
+    {
+        return $this->messages = new Collection;
+    }
 }
