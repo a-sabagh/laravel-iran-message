@@ -7,6 +7,7 @@ use IRMessage\Contracts\Driver;
 use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
 use IRMessage\Drivers\ArrayDriver;
+use IRMessage\Exceptions\DriverMissingConfigurationException;
 
 class MessageManager extends Manager implements Factory
 {
@@ -17,13 +18,24 @@ class MessageManager extends Manager implements Factory
 
     public function createLogDriver(): Driver
     {
-        return new LogDriver;
+        $config = $this->config->get('irmessage.drivers.log');
+
+        return $this->buildDriver(LogDriver::class, $config);
     }
 
     public function createArrayDriver(): Driver
     {
         $config = $this->config->get('irmessage.drivers.array');
 
-        return new ArrayDriver(collect($config));
+        return $this->buildDriver(ArrayDriver::class, $config);
+    }
+
+    protected function buildDriver(string $driver, $config): Driver
+    {
+        if(empty($config)){
+            throw DriverMissingConfigurationException::make($driver);
+        }
+
+        return new $driver($config);
     }
 }
