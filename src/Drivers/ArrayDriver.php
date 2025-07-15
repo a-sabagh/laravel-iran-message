@@ -4,8 +4,9 @@ namespace IRMessage\Drivers;
 
 use IRMessage\Contracts\Driver;
 use Illuminate\Support\Collection;
+use Stringable;
 
-class ArrayDriver implements Driver
+class ArrayDriver implements Driver, Stringable
 {
     /**
      * The collection of default configuration for array driver.
@@ -61,5 +62,10 @@ class ArrayDriver implements Driver
     public function flush()
     {
         return $this->messages = new Collection;
+    }
+
+    public function __toString(): string
+    {
+        return 'Array';
     }
 }
