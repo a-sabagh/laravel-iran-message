@@ -25,8 +25,8 @@ class ArrayDriver implements Driver, Stringable
     /**
      * Create a new array driver instance.
      */
-    public function __construct(Collection $config){
-        $this->config = $config;
+    public function __construct(Collection|array $config){
+        $this->config = (is_array($config))? collect($config) : $config;
 
         $this->messages = new Collection;
     }
