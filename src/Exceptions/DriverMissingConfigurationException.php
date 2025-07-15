@@ -7,7 +7,6 @@ use InvalidArgumentException;
 class DriverMissingConfigurationException extends InvalidArgumentException
 {
     /**
-     * Create a new exception for a missing configuration.
      *
      * @param  string  $driver
      * @param  array<int, string>  $keys
