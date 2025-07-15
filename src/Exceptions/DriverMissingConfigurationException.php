@@ -15,6 +15,6 @@ class DriverMissingConfigurationException extends InvalidArgumentException
     public static function make($driver)
     {
         /** @phpstan-ignore new.static */
-        return new static("Missing required configuration keys for [{$driver}] OAuth driver.");
+        return new static("Missing required configuration keys for [{$driver}] Message driver.");
     }
 }
