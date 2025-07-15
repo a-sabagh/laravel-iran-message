@@ -66,4 +66,22 @@ class MessageServiceTest extends TestCase
 
         $this->assertInstanceOf(ArrayDriver::class, $arrayDriver);
     }
+
+    public function test_array_instance_from(): void
+    {
+        $from = '09361825145';
+
+        $this->app->config->set('irmessage.drivers.array', [
+            'from' => $from
+        ]);
+
+        $recipients = [fake()->phoneNumber()];
+        $message = fake()->sentence(3);
+
+        $driver = $this->app->make(Factory::class)->driver('array'); 
+        $driver->send($recipients, $message);
+
+        $message = $driver->messages()->first();
+        $this->assertSame($from, $message['from']);
+    }
 }
