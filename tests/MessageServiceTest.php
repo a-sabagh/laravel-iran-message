@@ -13,11 +13,15 @@ class MessageServiceTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('irmessage.drivers', [
-            'array' => [
-                'default' => [
+        $app['config']->set('irmessage', [
+            'default' => 'log',
+            'drivers' => [
+                'array' => [
                     'from' => '09361825145'
                 ],
+                'log' => [
+                    'from' => '09361825145'
+                ]
             ]
         ]);
     }
