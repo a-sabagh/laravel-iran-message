@@ -13,7 +13,13 @@ class MessageServiceTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('irmessage.default', 'log');
+        $app['config']->set('irmessage.drivers', [
+            'array' => [
+                'default' => [
+                    'from' => '09361825145'
+                ],
+            ]
+        ]);
     }
 
     protected function getPackageProviders($app)
@@ -31,6 +37,7 @@ class MessageServiceTest extends TestCase
 
     public function test_message_manager_default_config(): void
     {
+        $this->app->config->set('irmessage.default', 'log');
         $defaultDriver = $this->app->make(Factory::class)->getDefaultDriver();
 
         $this->assertSame('log', $defaultDriver);
