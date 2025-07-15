@@ -7,6 +7,7 @@ use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
 use Orchestra\Testbench\TestCase;
 use IRMessage\Drivers\ArrayDriver;
+use IRMessage\Exceptions\DriverMissingConfigurationException;
 use IRMessage\MessageServiceProvider;
 
 class MessageServiceTest extends TestCase
@@ -82,10 +83,18 @@ class MessageServiceTest extends TestCase
         $recipients = [fake()->phoneNumber()];
         $message = fake()->sentence(3);
 
-        $driver = $this->app->make(Factory::class)->driver('array'); 
+        $driver = $this->app->make(Factory::class)->driver('array');
         $driver->send($recipients, $message);
 
         $message = $driver->messages()->first();
         $this->assertSame($from, $message['from']);
+    }
+
+    public function test_instanciate_throws_missing_configuration(): void
+    {
+        $this->app->config->set('irmessage.drivers.array', null);
+        $this->expectException(DriverMissingConfigurationException::class);
+
+        $this->app->make(Factory::class)->driver('array');
     }
 }
