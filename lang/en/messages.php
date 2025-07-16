@@ -12,12 +12,16 @@ return [
     | pattern based on language. or many of drivers like sms.ir is text base.
     | you are free to add any type of string message as body based on driver.
     |
-    | Each key must be defined as driver configuration lang index!
+    | Each key must be defined as driver configuration `lang` index!
     |
     */
 
-    'ippanel_patterns' => [
+    'ippanel_pattern' => [
         'greating' => '2ccjri4js41pt4s'
+    ],
+
+    'log' => [
+        'greating' => 'Hello World'
     ]
 
 ];
