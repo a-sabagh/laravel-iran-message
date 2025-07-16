@@ -12,6 +12,8 @@ class MessageServiceProvider extends ServiceProvider
         $this->app->singleton(Factory::class, function ($app) {
             return new MessageManager($app);
         });
+
+        $this->mergeConfigFrom(__DIR__.'/../config/irmessage.php', 'irmessage');
     }
 
     public function boot(): void
