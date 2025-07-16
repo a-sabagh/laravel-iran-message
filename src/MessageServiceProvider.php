@@ -13,13 +13,16 @@ class MessageServiceProvider extends ServiceProvider
             return new MessageManager($app);
         });
 
-        $this->mergeConfigFrom(__DIR__.'/../config/irmessage.php', 'irmessage');
+        $this->mergeConfigFrom(__DIR__ . '/../config/irmessage.php', 'irmessage');
     }
 
     public function boot(): void
     {
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'irmessage');
+
         $this->publishes([
             __DIR__ . '/../config/irmessage.php' => config_path('irmessage.php'),
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/irmessage'),
         ]);
     }
 }
