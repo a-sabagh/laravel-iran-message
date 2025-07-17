@@ -49,4 +49,29 @@ class LogDriverTest extends TestCase
 
         $logDriver->send(...$messageData);
     }
+
+    public function test_log_driver_send_from(): void
+    {
+        $from = fake()->phoneNumber();
+
+        $this->app->config->set('irmessage.drivers.log', ['from' => $from]);
+
+        $loggerMock = $this->mock(LoggerInterface::class);
+
+        $message = $this->app->make(Factory::class);
+
+        $messageData = [
+            'recipients' => [fake()->phoneNumber()],
+            'message' => 'greating',
+            'from' => null,
+            'args' => []
+        ];
+
+        $loggerMock
+            ->shouldReceive('debug')
+            ->once()
+            ->with(Mockery::on(fn($rawMessage) => str_contains($rawMessage, $from)));
+
+        $message->driver('log')->send(...$messageData);
+    }
 }
