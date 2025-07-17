@@ -2,6 +2,7 @@
 
 namespace IRMessage\Drivers;
 
+use Illuminate\Support\Collection;
 use Psr\Log\LoggerInterface;
 use IRMessage\Concerns\TranslatableMessage;
 use IRMessage\Contracts\Driver;
@@ -12,9 +13,11 @@ class LogDriver implements Driver, Stringable
     use TranslatableMessage;
 
     protected $logger;
+    protected Collection $config;
 
-    public function __construct(LoggerInterface $logger)
-    {
+    public function __construct(Collection|array $config, LoggerInterface $logger){
+        $this->config = (is_array($config))? collect($config) : $config;
+
         $this->logger = $logger;
     }
 
