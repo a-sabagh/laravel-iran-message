@@ -2,11 +2,11 @@
 
 namespace IRMessage\Drivers;
 
-use Illuminate\Support\Collection;
-use Psr\Log\LoggerInterface;
-use IRMessage\Concerns\TranslatableMessage;
-use IRMessage\Contracts\Driver;
 use Stringable;
+use Psr\Log\LoggerInterface;
+use IRMessage\Contracts\Driver;
+use Illuminate\Support\Collection;
+use IRMessage\Concerns\TranslatableMessage;
 
 class LogDriver implements Driver, Stringable
 {
@@ -15,8 +15,9 @@ class LogDriver implements Driver, Stringable
     protected $logger;
     protected Collection $config;
 
-    public function __construct(Collection|array $config, LoggerInterface $logger){
-        $this->config = (is_array($config))? collect($config) : $config;
+    public function __construct(Collection|array $config, LoggerInterface $logger)
+    {
+        $this->config = (is_array($config)) ? collect($config) : $config;
 
         $this->logger = $logger;
     }
@@ -26,7 +27,19 @@ class LogDriver implements Driver, Stringable
         return $this->logger;
     }
 
-    public function send(array|string $recipients, string $message, array $args = [], ?string $from = null) {}
+    public function send(array|string $recipients, string $message, array $args = [], ?string $from = null)
+    {
+        $rawMessageLine = sprintf(
+            "[%s] Message: '%s' | To: %s | From: %s | Args: %s",
+            date('Y-m-d H:i:s'),
+            $message,
+            is_array($recipients) ? implode(', ', $recipients) : $recipients,
+            $from ?? $this->config->get('from'),
+            json_encode($args)
+        );
+
+        $this->logger()->debug($rawMessageLine);
+    }
 
     public function __toString(): string
     {
