@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Log\Logger;
 use Illuminate\Log\LogManager;
 use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
@@ -74,4 +75,30 @@ class LogDriverTest extends TestCase
 
         $message->driver('log')->send(...$messageData);
     }
+
+    public function test_log_driver_translate_message_body(): void
+    {
+        $this->app->config->set('irmessage.drivers.log', ['lang' => 'log']);
+
+        $loggerMock = $this->mock(LoggerInterface::class);
+
+        $logDriver = $this->app->make(Factory::class)->driver('log');
+
+        $messageData = [
+            'recipients' => [fake()->phoneNumber()],
+            'message' => 'greating',
+            'from' => fake()->phoneNumber(),
+            'args' => []
+        ];
+        
+        $actualMessageBody = trans("irmessage::messages.log.greating");
+
+        $loggerMock
+            ->shouldReceive('debug')
+            ->once()
+            ->with(Mockery::on(fn($rawMessage) => str_contains($rawMessage, $actualMessageBody)));
+
+        $logDriver->send(...$messageData);
+    }
+
 }

@@ -30,9 +30,9 @@ class LogDriver implements Driver, Stringable
     public function send(array|string $recipients, string $message, array $args = [], ?string $from = null)
     {
         $rawMessageLine = sprintf(
-            "[%s] Message: '%s' | To: %s | From: %s | Args: %s",
+            "[%s] New Message: '%s' | To: %s | From: %s | Args: %s",
             date('Y-m-d H:i:s'),
-            $message,
+            $this->translate($message),
             is_array($recipients) ? implode(', ', $recipients) : $recipients,
             $from ?? $this->config->get('from'),
             json_encode($args)
