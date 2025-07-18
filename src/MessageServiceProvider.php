@@ -2,8 +2,10 @@
 
 namespace IRMessage;
 
+use Illuminate\Support\Facades\Notification;
 use IRMessage\Contracts\Factory;
 use Illuminate\Support\ServiceProvider;
+use IRMessage\Channels\MessageChannel;
 
 class MessageServiceProvider extends ServiceProvider
 {
@@ -24,5 +26,7 @@ class MessageServiceProvider extends ServiceProvider
             __DIR__ . '/../config/irmessage.php' => config_path('irmessage.php'),
             __DIR__ . '/../lang' => $this->app->langPath('vendor/irmessage'),
         ]);
+
+        Notification::extend('message', fn() => new MessageChannel);
     }
 }
