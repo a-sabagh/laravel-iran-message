@@ -2,13 +2,11 @@
 
 namespace IRMessage\Tests;
 
-use Mockery;
 use Orchestra\Testbench\TestCase;
 use IRMessage\Tests\Stubs\UserStub;
 use IRMessage\MessageServiceProvider;
 use IRMessage\Channels\MessageChannel;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Notifications\Dispatcher;
 
 class MessageChannelTest extends TestCase
