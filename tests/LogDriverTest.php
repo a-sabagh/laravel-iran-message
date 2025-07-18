@@ -1,15 +1,14 @@
 <?php
 
-namespace Tests;
+namespace IRMessageTests;
 
-use Illuminate\Log\Logger;
+use Mockery;
+use Psr\Log\LoggerInterface;
 use Illuminate\Log\LogManager;
 use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
 use Orchestra\Testbench\TestCase;
 use IRMessage\MessageServiceProvider;
-use Mockery;
-use Psr\Log\LoggerInterface;
 
 class LogDriverTest extends TestCase
 {

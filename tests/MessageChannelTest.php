@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace IRMessage\Tests;
 
 use Mockery;
 use Orchestra\Testbench\TestCase;

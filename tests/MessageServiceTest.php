@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace IRMessage\Tests;
 
 use IRMessage\MessageManager;
 use IRMessage\Contracts\Factory;

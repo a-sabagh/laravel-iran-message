@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace IRMessage\Tests;
 
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Collection;
