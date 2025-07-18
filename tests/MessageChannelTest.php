@@ -4,11 +4,12 @@ namespace IRMessage\Tests;
 
 use Mockery;
 use Orchestra\Testbench\TestCase;
+use IRMessage\Tests\Stubs\UserStub;
 use IRMessage\MessageServiceProvider;
+use IRMessage\Channels\MessageChannel;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Notifications\Dispatcher;
-use IRMessage\Channels\MessageChannel;
 
 class MessageChannelTest extends TestCase
 {
@@ -24,5 +25,26 @@ class MessageChannelTest extends TestCase
         $channel = $this->app->make(Dispatcher::class)->driver('message');
 
         $this->assertInstanceOf(MessageChannel::class, $channel);
+    }
+
+    public function test_notification_message_channel_send(): void
+    {
+        $userConfiguredStub = new UserStub;
+
+        $notificationMock = $this->mock(Notification::class)->makePartial();
+
+        $notificationMock
+            ->shouldReceive('via')
+            ->with($userConfiguredStub)
+            ->andReturn(['message']);
+
+        $this
+            ->mock(MessageChannel::class)
+            ->shouldReceive('send')
+            ->with($userConfiguredStub, $notificationMock);
+
+        $userConfiguredStub->notify($notificationMock);
+
+        $this->addToAssertionCount(1);
     }
 }
