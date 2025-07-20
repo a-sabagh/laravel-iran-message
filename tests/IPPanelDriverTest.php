@@ -35,4 +35,38 @@ class IPPanelDriverTest extends TestCase
         $this->assertInstanceOf(IPPanelDriver::class, $driver);
     }
 
+    public function test_ippannel_send_pattern(): void
+    {
+        $token = env('IPPANEL_TOKEN', null);
+        $pattern = env('IPPANEL_PATTERN', null);
+        $recipient = env('IPPANEL_RECIPIENT', null);
+        $from = env('IPPANEL_FROM', null);
+        $argsJsonEncoded = env('IPPANEL_ARGS', null);
+
+        $this->assertTrue(isset($token, $pattern, $recipient, $from), 'IPPANEL_* environment configuration is not set. driver test failed');
+
+        $config = [
+            'token' => $token,
+            'from' => $from,
+        ];
+
+        $ippanelDriverMock = $this
+            ->getMockBuilder(IPPanelDriver::class)
+            ->setConstructorArgs(['config' => $config])
+            ->onlyMethods(['translate'])
+            ->getMock();
+
+        $ippanelDriverMock
+            ->expects($this->once())
+            ->method('translate')
+            ->with('greating')
+            ->willReturn($pattern);
+
+        $args = isset($argsJsonEncoded) ? json_decode($argsJsonEncoded, true) : [];
+
+        $response = $ippanelDriverMock->send([$recipient], 'greating', $args);
+
+        $this->assertNotEmpty($response['data']);
+        $this->assertTrue($response['meta']['status']);
+    }
 }
