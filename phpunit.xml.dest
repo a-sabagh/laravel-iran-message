@@ -10,13 +10,18 @@
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
             <directory suffix=".php">src</directory>
         </include>
-    </coverage>
+    </source>
 
     <php>
         <server name="APP_ENV" value="testing"/>
+        <server name="IPPANEL_TOKEN" value=""/>
+        <server name="IPPANEL_PATTERN" value=""/>
+        <server name="IPPANEL_FROM" value=""/>
+        <server name="IPPANEL_RECIPIENT" value=""/>
+        <server name="IPPANEL_ARGS" value=''/>
     </php>
 </phpunit>
