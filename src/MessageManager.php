@@ -7,6 +7,7 @@ use IRMessage\Contracts\Driver;
 use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
 use IRMessage\Drivers\ArrayDriver;
+use IRMessage\Drivers\IPPanelDriver;
 use IRMessage\Exceptions\DriverMissingConfigurationException;
 use Psr\Log\LoggerInterface;
 
@@ -25,6 +26,13 @@ class MessageManager extends Manager implements Factory
         ];
 
         return $this->buildDriver(LogDriver::class, $parameters);
+    }
+
+    public function createIppanelDriver(): Driver
+    {
+        $parameters = ['config' => $this->config->get('irmessage.drivers.ippanel')];
+
+        return $this->buildDriver(IPPanelDriver::class, $parameters);
     }
 
     public function createArrayDriver(): Driver
