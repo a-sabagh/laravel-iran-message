@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace IRMessage\Database\Factories;
 
 use IRMessage\Models\OTP;
 use Illuminate\Database\Eloquent\Factories\Factory;
