@@ -20,13 +20,25 @@ class MessageServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->registerPublishing();
+        
         $this->loadTranslationsFrom(__DIR__ . '/../lang', 'irmessage');
-
+        
+        Notification::extend('message', fn() => new MessageChannel);
+    }
+    
+    public function registerPublishing(): void
+    {
+        $this->publishesMigrations([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'irmessage-migrations');
+        
         $this->publishes([
             __DIR__ . '/../config/irmessage.php' => config_path('irmessage.php'),
-            __DIR__ . '/../lang' => $this->app->langPath('vendor/irmessage'),
-        ]);
+        ], 'irmessage-config');
 
-        Notification::extend('message', fn() => new MessageChannel);
+        $this->publishes([
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/irmessage'),
+        ], 'irmessage-lang');
     }
 }
