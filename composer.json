@@ -54,7 +54,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --colors=always"
+        "test": "vendor/bin/phpunit --colors=always",
+        "test:feature": "vendor/bin/phpunit --colors=always --testsuit=Feature"
     },
     "config": {
         "sort-packages": true

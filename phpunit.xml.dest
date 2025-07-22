@@ -5,16 +5,16 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">tests</directory>
+        <testsuite name="IRMessage">
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
 
-    <source>
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-    </source>
+    <testsuites>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
+    </testsuites>
 
     <php>
         <server name="APP_ENV" value="testing"/>
