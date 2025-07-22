@@ -26,4 +26,18 @@ class OTPFactoryTest extends TestCase
 
         $this->assertInstanceOf(OTP::class, $otp);
     }
+
+    public function test_get_otp_by_phone(): void
+    {
+        $phoneNo = fake()->numerify('9#########');
+
+        $expected = OTP::factory()->state([
+            'phone_no' => $phoneNo
+        ])->create();
+
+        $actual = OTP::phone($expected->phone_no)->first();
+        $equality = $expected->is($actual);
+        
+        $this->assertTrue($equality);
+    }
 }
