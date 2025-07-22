@@ -21,6 +21,8 @@ class MessageServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPublishing();
+
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         
         $this->loadTranslationsFrom(__DIR__ . '/../lang', 'irmessage');
         
