@@ -5,24 +5,19 @@ namespace IRMessage\Tests\Feature;
 use IRMessage\Models\OTP;
 use Orchestra\Testbench\TestCase;
 use IRMessage\MessageServiceProvider;
-use Orchestra\Testbench\Concerns\WithWorkbench;
+use Orchestra\Testbench\Attributes\WithConfig;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 
+#[WithConfig('database.default', 'testing')] 
 class OTPFactoryTest extends TestCase
 {
-    use WithWorkbench, RefreshDatabase, WithLaravelMigrations;
+    use RefreshDatabase;
     
     protected function getPackageProviders($app)
     {
         return [
             MessageServiceProvider::class,
         ];
-    }
-
-    public function defineEnvironment($app)
-    {
-        $app['config']->set('database.default', 'testing');
     }
 
     public function test_otp_factory(): void
