@@ -7,6 +7,7 @@ use Orchestra\Testbench\TestCase;
 use IRMessage\Drivers\IPPanelDriver;
 use IRMessage\MessageServiceProvider;
 use Mockery\MockInterface;
+use Psy\CodeCleaner\AssignThisVariablePass;
 
 class IPPanelDriverTest extends TestCase
 {
@@ -37,6 +38,12 @@ class IPPanelDriverTest extends TestCase
 
     public function test_ippannel_send_pattern(): void
     {
+        if (!env('TESTING_GATEWAYS')) {
+            $this->markTestSkipped('in order to TESTING_GATEWAYS is false, ippanel test disabled');
+
+            return;
+        }
+
         $token = env('IPPANEL_TOKEN', null);
         $pattern = env('IPPANEL_PATTERN', null);
         $recipient = env('IPPANEL_RECIPIENT', null);
