@@ -37,4 +37,17 @@ class OTPServiceTest extends TestCase
 
         $this->assertEquals($expectedMessageBody, $actualMessageBody);
     }
+
+    public function test_customize_otp_service_message_args(): void
+    {
+        $expectedMessageArgs = [
+            'verification-code' => rand(999, 100)
+        ]; 
+
+        OTP::messageArgsUsing(fn() => $expectedMessageArgs);
+
+        $actualMessageArgs = OTP::getMessageArgs();
+
+        $this->assertEquals($expectedMessageArgs, $actualMessageArgs);
+    }
 }
