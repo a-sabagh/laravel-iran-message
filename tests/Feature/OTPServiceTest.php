@@ -27,11 +27,11 @@ class OTPServiceTest extends TestCase
         $this->assertInstanceOf(MessageManager::class, OTP::message());
     }
 
-    public function test_otp_service_static_message_configuration(): void
+    public function test_customize_otp_service_message_body(): void
     {
         $expectedMessageBody = 'one-time-password';
 
-        OTPService::messageBodyUsing(fn() => $expectedMessageBody);
+        OTP::messageBodyUsing(fn() => $expectedMessageBody);
 
         $actualMessageBody = OTP::getMessageBody();
 
