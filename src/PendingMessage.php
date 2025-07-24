@@ -49,24 +49,28 @@ class PendingMessage
     public function to($recipients): self
     {
         $this->recipients = is_array($recipients) ? $recipients : func_get_args();
+
         return $this;
     }
 
     public function from(string $from): self
     {
         $this->from = $from;
+
         return $this;
     }
 
     public function message(string $message): self
     {
         $this->message = $message;
+
         return $this;
     }
 
     public function args(array $args): self
     {
         $this->args = $args;
+
         return $this;
     }
 

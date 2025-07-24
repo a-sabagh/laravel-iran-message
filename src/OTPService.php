@@ -14,12 +14,12 @@ class OTPService
         protected Factory $messageManager
     ) {}
 
-    public function send($countryCode, $phoneNumber) 
+    public function send($countryCode, $phoneNumber)
     {
         $recipients = ["{$countryCode}{$phoneNumber}"];
         $messageBody = $this->getMessageBody();
         $messageArgs = $this->getMessageArgs();
-        
+
         $this->messageManager->send($recipients, $messageBody, $messageArgs);
     }
 
@@ -44,6 +44,7 @@ class OTPService
         }
 
         $verificationCode = rand(9999, 1000);
+
         return ['verification_code' => $verificationCode];
     }
 

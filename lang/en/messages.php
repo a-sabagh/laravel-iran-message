@@ -17,11 +17,11 @@ return [
     */
 
     'ippanel_pattern' => [
-        'greating' => '2ccjri4js41pt4s'
+        'greating' => '2ccjri4js41pt4s',
     ],
 
     'log' => [
-        'greating' => 'Hello World'
-    ]
+        'greating' => 'Hello World',
+    ],
 
 ];

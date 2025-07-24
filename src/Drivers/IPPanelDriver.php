@@ -2,10 +2,10 @@
 
 namespace IRMessage\Drivers;
 
-use IRMessage\Contracts\Driver;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use IRMessage\Concerns\TranslatableMessage;
+use IRMessage\Contracts\Driver;
 
 class IPPanelDriver implements Driver
 {
@@ -29,11 +29,11 @@ class IPPanelDriver implements Driver
         $response = Http::acceptJson()
             ->withHeader('Authorization', $token)
             ->post(self::url, [
-                "sending_type" => "pattern",
-                "from_number" => $from,
-                "code" => $pattern,
-                "recipients" => $recipients,
-                "params" => $args
+                'sending_type' => 'pattern',
+                'from_number' => $from,
+                'code' => $pattern,
+                'recipients' => $recipients,
+                'params' => $args,
             ]);
 
         return $response->json();

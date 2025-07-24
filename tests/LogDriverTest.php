@@ -2,20 +2,20 @@
 
 namespace IRMessageTests;
 
-use Mockery;
-use Psr\Log\LoggerInterface;
 use Illuminate\Log\LogManager;
 use IRMessage\Contracts\Factory;
 use IRMessage\Drivers\LogDriver;
-use Orchestra\Testbench\TestCase;
 use IRMessage\MessageServiceProvider;
+use Mockery;
+use Orchestra\Testbench\TestCase;
+use Psr\Log\LoggerInterface;
 
 class LogDriverTest extends TestCase
 {
     protected function getPackageProviders($app)
     {
         return [
-            MessageServiceProvider::class
+            MessageServiceProvider::class,
         ];
     }
 
@@ -40,7 +40,7 @@ class LogDriverTest extends TestCase
             'recipients' => [fake()->phoneNumber()],
             'message' => 'greating',
             'from' => fake()->phoneNumber(),
-            'args' => []
+            'args' => [],
         ];
 
         $loggerMock
@@ -64,13 +64,13 @@ class LogDriverTest extends TestCase
             'recipients' => [fake()->phoneNumber()],
             'message' => 'greating',
             'from' => null,
-            'args' => []
+            'args' => [],
         ];
 
         $loggerMock
             ->shouldReceive('debug')
             ->once()
-            ->with(Mockery::on(fn($rawMessage) => str_contains($rawMessage, $from)));
+            ->with(Mockery::on(fn ($rawMessage) => str_contains($rawMessage, $from)));
 
         $message->driver('log')->send(...$messageData);
     }
@@ -87,17 +87,16 @@ class LogDriverTest extends TestCase
             'recipients' => [fake()->phoneNumber()],
             'message' => 'greating',
             'from' => fake()->phoneNumber(),
-            'args' => []
+            'args' => [],
         ];
-        
-        $actualMessageBody = trans("irmessage::messages.log.greating");
+
+        $actualMessageBody = trans('irmessage::messages.log.greating');
 
         $loggerMock
             ->shouldReceive('debug')
             ->once()
-            ->with(Mockery::on(fn($rawMessage) => str_contains($rawMessage, $actualMessageBody)));
+            ->with(Mockery::on(fn ($rawMessage) => str_contains($rawMessage, $actualMessageBody)));
 
         $logDriver->send(...$messageData);
     }
-
 }

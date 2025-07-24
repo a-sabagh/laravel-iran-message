@@ -2,17 +2,17 @@
 
 namespace IRMessage\Tests\Feature;
 
-use IRMessage\Models\OTP;
-use Orchestra\Testbench\TestCase;
-use IRMessage\MessageServiceProvider;
-use Orchestra\Testbench\Attributes\WithConfig;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use IRMessage\MessageServiceProvider;
+use IRMessage\Models\OTP;
+use Orchestra\Testbench\Attributes\WithConfig;
+use Orchestra\Testbench\TestCase;
 
-#[WithConfig('database.default', 'testing')] 
+#[WithConfig('database.default', 'testing')]
 class OTPFactoryTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     protected function getPackageProviders($app)
     {
         return [
@@ -32,12 +32,12 @@ class OTPFactoryTest extends TestCase
         $phoneNo = fake()->numerify('9#########');
 
         $expected = OTP::factory()->state([
-            'phone_no' => $phoneNo
+            'phone_no' => $phoneNo,
         ])->create();
 
         $actual = OTP::phone($expected->phone_no)->first();
         $equality = $expected->is($actual);
-        
+
         $this->assertTrue($equality);
     }
 }

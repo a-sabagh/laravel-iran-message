@@ -2,8 +2,8 @@
 
 namespace IRMessage\Facades;
 
-use IRMessage\Contracts\Factory;
 use Illuminate\Support\Facades\Facade;
+use IRMessage\Contracts\Factory;
 
 class Message extends Facade
 {

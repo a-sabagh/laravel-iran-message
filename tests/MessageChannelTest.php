@@ -2,19 +2,19 @@
 
 namespace IRMessage\Tests;
 
-use Orchestra\Testbench\TestCase;
-use IRMessage\Tests\Stubs\UserStub;
-use IRMessage\MessageServiceProvider;
-use IRMessage\Channels\MessageChannel;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Notifications\Dispatcher;
+use Illuminate\Notifications\Notification;
+use IRMessage\Channels\MessageChannel;
+use IRMessage\MessageServiceProvider;
+use IRMessage\Tests\Stubs\UserStub;
+use Orchestra\Testbench\TestCase;
 
 class MessageChannelTest extends TestCase
 {
     protected function getPackageProviders($app)
     {
         return [
-            MessageServiceProvider::class
+            MessageServiceProvider::class,
         ];
     }
 

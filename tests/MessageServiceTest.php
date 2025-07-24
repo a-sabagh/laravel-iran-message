@@ -2,13 +2,13 @@
 
 namespace IRMessage\Tests;
 
-use IRMessage\MessageManager;
 use IRMessage\Contracts\Factory;
-use IRMessage\Drivers\LogDriver;
-use Orchestra\Testbench\TestCase;
 use IRMessage\Drivers\ArrayDriver;
+use IRMessage\Drivers\LogDriver;
 use IRMessage\Exceptions\DriverMissingConfigurationException;
+use IRMessage\MessageManager;
 use IRMessage\MessageServiceProvider;
+use Orchestra\Testbench\TestCase;
 
 class MessageServiceTest extends TestCase
 {
@@ -18,12 +18,12 @@ class MessageServiceTest extends TestCase
             'default' => 'log',
             'drivers' => [
                 'array' => [
-                    'from' => '09361825145'
+                    'from' => '09361825145',
                 ],
                 'log' => [
-                    'from' => '09361825145'
-                ]
-            ]
+                    'from' => '09361825145',
+                ],
+            ],
         ]);
     }
 
@@ -77,7 +77,7 @@ class MessageServiceTest extends TestCase
         $from = '09361825145';
 
         $this->app->config->set('irmessage.drivers.array', [
-            'from' => $from
+            'from' => $from,
         ]);
 
         $recipients = [fake()->phoneNumber()];

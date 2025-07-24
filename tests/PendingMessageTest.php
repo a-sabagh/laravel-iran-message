@@ -2,8 +2,8 @@
 
 namespace IRMessage\Tests;
 
-use IRMessage\PendingMessage;
 use IRMessage\Contracts\Factory;
+use IRMessage\PendingMessage;
 use Orchestra\Testbench\TestCase;
 
 class PendingMessageTest extends TestCase
@@ -18,7 +18,7 @@ class PendingMessageTest extends TestCase
         $messageManagerMock = $this
             ->mock(
                 Factory::class,
-                fn($mock) => $mock
+                fn ($mock) => $mock
                     ->shouldReceive('driver')
                     ->andReturnSelf()
                     ->shouldReceive('send')

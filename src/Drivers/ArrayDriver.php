@@ -2,16 +2,14 @@
 
 namespace IRMessage\Drivers;
 
-use IRMessage\Contracts\Driver;
 use Illuminate\Support\Collection;
+use IRMessage\Contracts\Driver;
 use Stringable;
 
 class ArrayDriver implements Driver, Stringable
 {
     /**
      * The collection of default configuration for array driver.
-     *
-     * @var \Illuminate\Support\Collection
      */
     protected Collection $config;
 
@@ -25,8 +23,9 @@ class ArrayDriver implements Driver, Stringable
     /**
      * Create a new array driver instance.
      */
-    public function __construct(Collection|array $config){
-        $this->config = (is_array($config))? collect($config) : $config;
+    public function __construct(Collection|array $config)
+    {
+        $this->config = (is_array($config)) ? collect($config) : $config;
 
         $this->messages = new Collection;
     }
@@ -34,13 +33,13 @@ class ArrayDriver implements Driver, Stringable
     /**
      * {@inheritdoc}
      */
-    public function send(array|string $recipients, string $message, array $args = [], string $from = null): void
+    public function send(array|string $recipients, string $message, array $args = [], ?string $from = null): void
     {
         $this->messages[] = [
             'recipients' => (array) $recipients,
             'message' => $message,
             'args' => $args,
-            'from' => $from ?? $this->config->get('from')
+            'from' => $from ?? $this->config->get('from'),
         ];
     }
 

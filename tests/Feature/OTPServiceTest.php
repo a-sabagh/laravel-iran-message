@@ -2,13 +2,13 @@
 
 namespace IRMessage\Tests\Feature;
 
-use IRMessage\OTPService;
+use IRMessage\Concerns\ThrottleAttempt;
+use IRMessage\Contracts\Factory;
 use IRMessage\Facades\OTP;
 use IRMessage\MessageManager;
-use IRMessage\Contracts\Factory;
-use Orchestra\Testbench\TestCase;
 use IRMessage\MessageServiceProvider;
-use IRMessage\Concerns\ThrottleAttempt;
+use IRMessage\OTPService;
+use Orchestra\Testbench\TestCase;
 
 class OTPServiceTest extends TestCase
 {
@@ -17,7 +17,7 @@ class OTPServiceTest extends TestCase
     protected function getPackageProviders($app): array
     {
         return [
-            MessageServiceProvider::class
+            MessageServiceProvider::class,
         ];
     }
 
@@ -32,7 +32,7 @@ class OTPServiceTest extends TestCase
     {
         $expectedMessageBody = 'one-time-password';
 
-        OTP::messageBodyUsing(fn() => $expectedMessageBody);
+        OTP::messageBodyUsing(fn () => $expectedMessageBody);
 
         $actualMessageBody = OTP::getMessageBody();
 
@@ -42,7 +42,7 @@ class OTPServiceTest extends TestCase
     public function test_default_otp_service_message_body(): void
     {
         OTP::messageBodyUsing(null);
-        
+
         $actualMessageBody = OTP::getMessageBody();
         $expectedMessageBody = 'otp';
 
@@ -52,10 +52,10 @@ class OTPServiceTest extends TestCase
     public function test_customize_otp_service_message_args(): void
     {
         $expectedMessageArgs = [
-            'verification-code' => rand(999, 100)
-        ]; 
+            'verification-code' => rand(999, 100),
+        ];
 
-        OTP::messageArgsUsing(fn() => $expectedMessageArgs);
+        OTP::messageArgsUsing(fn () => $expectedMessageArgs);
 
         $actualMessageArgs = OTP::getMessageArgs();
 
@@ -67,16 +67,16 @@ class OTPServiceTest extends TestCase
         $countryCode = '98';
         $phoneNumber = '9000000000';
         $recipients = ["{$countryCode}{$phoneNumber}"];
-        
+
         $messageManager = $this->mock(Factory::class);
 
         $message = 'one-time-password';
-        OTP::messageBodyUsing(fn() => $message);
+        OTP::messageBodyUsing(fn () => $message);
 
         $args = [
-            'verification-code' => rand(999, 100)
-        ]; 
-        OTP::messageArgsUsing(fn() => $args);
+            'verification-code' => rand(999, 100),
+        ];
+        OTP::messageArgsUsing(fn () => $args);
 
         $messageManager
             ->shouldReceive('send')

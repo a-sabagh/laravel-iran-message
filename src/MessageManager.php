@@ -5,9 +5,9 @@ namespace IRMessage;
 use Illuminate\Support\Manager;
 use IRMessage\Contracts\Driver;
 use IRMessage\Contracts\Factory;
-use IRMessage\Drivers\LogDriver;
 use IRMessage\Drivers\ArrayDriver;
 use IRMessage\Drivers\IPPanelDriver;
+use IRMessage\Drivers\LogDriver;
 use IRMessage\Exceptions\DriverMissingConfigurationException;
 use Psr\Log\LoggerInterface;
 
@@ -22,7 +22,7 @@ class MessageManager extends Manager implements Factory
     {
         $parameters = [
             'config' => $this->config->get('irmessage.drivers.log'),
-            'logger' => $this->container->make(LoggerInterface::class)
+            'logger' => $this->container->make(LoggerInterface::class),
         ];
 
         return $this->buildDriver(LogDriver::class, $parameters);

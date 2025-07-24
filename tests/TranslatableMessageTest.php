@@ -2,10 +2,10 @@
 
 namespace IRMessage\Tests;
 
-use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Collection;
-use IRMessage\MessageServiceProvider;
 use IRMessage\Concerns\TranslatableMessage;
+use IRMessage\MessageServiceProvider;
+use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class TranslatableMessageTest extends TestCase
@@ -21,7 +21,7 @@ class TranslatableMessageTest extends TestCase
     {
         return [
             ['ippanel_pattern'],
-            ['log']
+            ['log'],
         ];
     }
 
@@ -30,7 +30,8 @@ class TranslatableMessageTest extends TestCase
     {
         $this->app->config->set('app.locale', 'en');
 
-        $stub = new class {
+        $stub = new class
+        {
             use TranslatableMessage;
 
             public Collection $config;
@@ -39,7 +40,7 @@ class TranslatableMessageTest extends TestCase
         $stub->config = collect(['lang' => $driver]);
 
         $this->assertEquals(
-            trans("irmessage::messages.{$driver}.greating"), 
+            trans("irmessage::messages.{$driver}.greating"),
             $stub->translate('greating')
         );
     }

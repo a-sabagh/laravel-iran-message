@@ -2,17 +2,18 @@
 
 namespace IRMessage\Drivers;
 
-use Stringable;
-use Psr\Log\LoggerInterface;
-use IRMessage\Contracts\Driver;
 use Illuminate\Support\Collection;
 use IRMessage\Concerns\TranslatableMessage;
+use IRMessage\Contracts\Driver;
+use Psr\Log\LoggerInterface;
+use Stringable;
 
 class LogDriver implements Driver, Stringable
 {
     use TranslatableMessage;
 
     protected $logger;
+
     protected Collection $config;
 
     public function __construct(Collection|array $config, LoggerInterface $logger)

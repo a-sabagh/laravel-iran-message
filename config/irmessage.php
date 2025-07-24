@@ -27,7 +27,7 @@ return [
             'username' => 'Your Username',
             'password' => 'Your Password',
             'from' => 'Your Default From Number',
-        ]
+        ],
     ],
 
 ];

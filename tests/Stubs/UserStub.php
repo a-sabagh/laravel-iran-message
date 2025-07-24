@@ -2,8 +2,8 @@
 
 namespace IRMessage\Tests\Stubs;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as AuthUser;
+use Illuminate\Notifications\Notifiable;
 
 class UserStub extends AuthUser
 {

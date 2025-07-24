@@ -4,8 +4,5 @@ namespace IRMessage\Channels;
 
 class MessageChannel
 {
-    public function send()
-    {
-        
-    }
+    public function send() {}
 }
