@@ -6,6 +6,14 @@ use Illuminate\Cache\RateLimiter;
 
 trait ThrottleAttempt
 {
+    protected function hasTooManyAttempts($phoneNumber, $countryCode)
+    {
+        return $this->limiter()->tooManyAttempts(
+            $this->throttleKey($phoneNumber, $countryCode),
+            $this->maxAttempts()
+        );
+    }
+
     protected function incrementAttempts($phoneNumber, $countryCode)
     {
         $this->limiter()->increment(
