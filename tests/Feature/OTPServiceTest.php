@@ -38,6 +38,16 @@ class OTPServiceTest extends TestCase
         $this->assertEquals($expectedMessageBody, $actualMessageBody);
     }
 
+    public function test_default_otp_service_message_body(): void
+    {
+        OTP::messageBodyUsing(null);
+        
+        $actualMessageBody = OTP::getMessageBody();
+        $expectedMessageBody = 'otp';
+
+        $this->assertEquals($expectedMessageBody, $actualMessageBody);
+    }
+
     public function test_customize_otp_service_message_args(): void
     {
         $expectedMessageArgs = [
