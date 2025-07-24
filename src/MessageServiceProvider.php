@@ -15,6 +15,12 @@ class MessageServiceProvider extends ServiceProvider
             return new MessageManager($app);
         });
 
+        $this->app->singleton('irmessage.otp', function($app){
+            $message = $app->make(Factory::class);
+
+            return new OTPService($message);
+        });
+
         $this->mergeConfigFrom(__DIR__ . '/../config/irmessage.php', 'irmessage');
     }
 
