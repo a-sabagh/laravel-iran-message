@@ -29,6 +29,7 @@
         "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0"
     },
     "require-dev": {
+        "laravel/pint": "^1.24",
         "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
         "phpunit/phpunit": "^8.0|^9.3|^10.4|^11.5"
     },
@@ -55,7 +56,9 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit --colors=always",
-        "test:feature": "vendor/bin/phpunit --colors=always --testsuit=Feature"
+        "test:feature": "vendor/bin/phpunit --colors=always --testsuit=Feature",
+        "pint": "vendor/bin/pint",
+        "pint:verbose": "vendor/bin/pint -v"
     },
     "config": {
         "sort-packages": true
