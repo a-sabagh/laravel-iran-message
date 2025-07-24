@@ -14,7 +14,14 @@ class OTPService
         protected Factory $messageManager
     ) {}
 
-    public function send() {}
+    public function send($countryCode, $phoneNumber) 
+    {
+        $recipients = ["{$countryCode}{$phoneNumber}"];
+        $messageBody = $this->getMessageBody();
+        $messageArgs = $this->getMessageArgs();
+        
+        $this->messageManager->send($recipients, $messageBody, $messageArgs);
+    }
 
     public function message(): Factory
     {

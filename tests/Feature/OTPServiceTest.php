@@ -5,6 +5,7 @@ namespace IRMessage\Tests\Feature;
 use IRMessage\OTPService;
 use IRMessage\Facades\OTP;
 use IRMessage\MessageManager;
+use IRMessage\Contracts\Factory;
 use Orchestra\Testbench\TestCase;
 use IRMessage\MessageServiceProvider;
 use IRMessage\Concerns\ThrottleAttempt;
@@ -59,5 +60,29 @@ class OTPServiceTest extends TestCase
         $actualMessageArgs = OTP::getMessageArgs();
 
         $this->assertEquals($expectedMessageArgs, $actualMessageArgs);
+    }
+
+    public function test_otp_service_send(): void
+    {
+        $countryCode = '98';
+        $phoneNumber = '9000000000';
+        $recipients = ["{$countryCode}{$phoneNumber}"];
+        
+        $messageManager = $this->mock(Factory::class);
+
+        $message = 'one-time-password';
+        OTP::messageBodyUsing(fn() => $message);
+
+        $args = [
+            'verification-code' => rand(999, 100)
+        ]; 
+        OTP::messageArgsUsing(fn() => $args);
+
+        $messageManager
+            ->shouldReceive('send')
+            ->once()
+            ->with($recipients, $message, $args);
+
+        OTP::send($countryCode, $phoneNumber);
     }
 }
