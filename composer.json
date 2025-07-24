@@ -58,6 +58,7 @@
         "test": "vendor/bin/phpunit --colors=always",
         "test:feature": "vendor/bin/phpunit --colors=always --testsuit=Feature",
         "pint": "vendor/bin/pint",
+        "pint:test": "vendor/bin/pint --test",
         "pint:verbose": "vendor/bin/pint -v"
     },
     "config": {
