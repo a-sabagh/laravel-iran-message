@@ -2,10 +2,26 @@
 
 namespace IRMessage\Concerns;
 
+use Illuminate\Http\Response;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Validation\ValidationException;
 
 trait ThrottleAttempt
 {
+    protected function sendLockoutResponse($phoneNumber, $countryCode)
+    {
+        $seconds = $this->limiter()->availableIn(
+            $this->throttleKey($phoneNumber, $countryCode)
+        );
+
+        throw ValidationException::withMessages([
+            "{$countryCode}{$phoneNumber}" => [trans('irmessage::exceptions.otp.throttle', [
+                'seconds' => $seconds,
+                'minutes' => ceil($seconds / 60),
+            ])],
+        ])->status(Response::HTTP_TOO_MANY_REQUESTS);
+    }
     protected function hasTooManyAttempts($phoneNumber, $countryCode)
     {
         return $this->limiter()->tooManyAttempts(
