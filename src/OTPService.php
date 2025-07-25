@@ -4,6 +4,7 @@ namespace IRMessage;
 
 use IRMessage\Concerns\ThrottleAttempt;
 use IRMessage\Contracts\Factory;
+use IRMessage\Contracts\StorageFactory;
 
 class OTPService
 {
@@ -14,7 +15,8 @@ class OTPService
     public static $messageArgsCallback;
 
     public function __construct(
-        protected Factory $messageManager
+        protected Factory $messageManager,
+        protected StorageFactory $storageManager
     ) {}
 
     public function send($countryCode, $phoneNumber)
@@ -37,6 +39,11 @@ class OTPService
     public function message(): Factory
     {
         return $this->messageManager;
+    }
+
+    public function storage(): StorageFactory
+    {
+        return $this->storageManager;
     }
 
     public function getMessageBody(): string
