@@ -56,7 +56,6 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit --colors=always",
-        "test:feature": "vendor/bin/phpunit --colors=always --testsuit=Feature",
         "pint": "vendor/bin/pint",
         "pint:dirty": "vendor/bin/pint --dirty",
         "pint:test": "vendor/bin/pint --test",

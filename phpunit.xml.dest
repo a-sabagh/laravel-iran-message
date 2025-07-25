@@ -10,12 +10,6 @@
         </testsuite>
     </testsuites>
 
-    <testsuites>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
-        </testsuite>
-    </testsuites>
-
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="TESTING_GATEWAYS" value="false"/>
