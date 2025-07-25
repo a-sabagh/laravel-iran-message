@@ -1,6 +1,6 @@
 <?php
 
-namespace IRMessage\Tests\Feature;
+namespace IRMessage\Tests;
 
 use IRMessage\Concerns\ThrottleAttempt;
 use IRMessage\Contracts\Factory;
