@@ -57,7 +57,7 @@
     "scripts": {
         "test": "vendor/bin/phpunit --colors=always",
         "pint": "vendor/bin/pint",
-        "pint:dirty": "vendor/bin/pint --dirty",
+        "pint:dirty": "vendor/bin/pint --dirty -v",
         "pint:test": "vendor/bin/pint --test",
         "pint:verbose": "vendor/bin/pint -v"
     },
