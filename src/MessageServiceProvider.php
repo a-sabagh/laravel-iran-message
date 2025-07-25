@@ -6,19 +6,21 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\ServiceProvider;
 use IRMessage\Channels\MessageChannel;
 use IRMessage\Contracts\Factory;
+use IRMessage\Contracts\StorageFactory;
 
 class MessageServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(Factory::class, function ($app) {
-            return new MessageManager($app);
-        });
+        $this->app->singleton(Factory::class, fn ($app) => new MessageManager($app));
+
+        $this->app->singleton(StorageFactory::class, fn ($app) => new StorageManager($app));
 
         $this->app->singleton('irmessage.otp', function ($app) {
             $message = $app->make(Factory::class);
+            $storage = $app->make(StorageFactory::class);
 
-            return new OTPService($message);
+            return new OTPService($message, $storage);
         });
 
         $this->mergeConfigFrom(__DIR__.'/../config/irmessage.php', 'irmessage');
