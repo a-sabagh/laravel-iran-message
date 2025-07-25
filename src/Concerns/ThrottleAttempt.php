@@ -10,7 +10,7 @@ use IRMessage\Events\TooManyOTPRequest;
 
 trait ThrottleAttempt
 {
-    protected function sendLockoutResponse($phoneNumber, $countryCode)
+    protected function sendThrottleResponse($phoneNumber, $countryCode)
     {
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($phoneNumber, $countryCode)
@@ -24,7 +24,7 @@ trait ThrottleAttempt
         ])->status(Response::HTTP_TOO_MANY_REQUESTS);
     }
 
-    protected function fireTooManyOTPRequestEvent($countryCode, $phoneNumber): void
+    protected function fireThrottleEvent($countryCode, $phoneNumber): void
     {
         Event::dispatch(new TooManyOTPRequest($countryCode, $phoneNumber));
     }
@@ -61,7 +61,7 @@ trait ThrottleAttempt
 
     public function maxAttempts()
     {
-        return property_exists($this, 'maxAttempts') ? $this->maxAttempts : 5;
+        return property_exists($this, 'maxAttempts') ? $this->maxAttempts : 1;
     }
 
     public function decayMinutes()
