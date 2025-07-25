@@ -7,6 +7,7 @@ use IRMessage\Facades\OTP;
 use IRMessage\MessageManager;
 use IRMessage\MessageServiceProvider;
 use IRMessage\OTPService;
+use IRMessage\StorageManager;
 use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\TestCase;
 
@@ -24,6 +25,8 @@ class OTPServiceTest extends TestCase
         $this->assertInstanceOf(OTPService::class, OTP::getFacadeRoot());
 
         $this->assertInstanceOf(MessageManager::class, OTP::message());
+
+        $this->assertInstanceOf(StorageManager::class, OTP::storage());
     }
 
     public function test_customize_otp_service_message_body(): void
