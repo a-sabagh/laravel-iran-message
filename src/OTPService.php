@@ -28,11 +28,15 @@ class OTPService
         }
 
         $code = $this->getCode();
+        $decayMinutes = $this->decayMinutes();
+
         $recipients = ["{$countryCode}{$phoneNumber}"];
         $messageBody = $this->getMessageBody();
         $messageArgs = $this->getMessageArgs($code);
 
-        $this->messageManager->send($recipients, $messageBody, $messageArgs);
+        $this->message()->send($recipients, $messageBody, $messageArgs);
+
+        $this->storage()->store($countryCode, $phoneNumber, $code, $decayMinutes);
 
         $this->incrementAttempts($countryCode, $phoneNumber);
     }
