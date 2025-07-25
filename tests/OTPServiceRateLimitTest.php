@@ -18,7 +18,11 @@ class OTPServiceRateLimitTest extends TestCase
         ];
     }
 
-    #[WithEnv('CACHE_STORE', 'array')]
+    protected function defineEnvironment($app)
+    {
+        $app->config->set('cache.default', 'array');
+    }
+
     public function test_otp_service_has_threshold_attempt(): void
     {
         $this->expectException(ValidationException::class);
