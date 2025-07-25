@@ -2,10 +2,13 @@
 
 namespace IRMessage;
 
+use IRMessage\Concerns\ThrottleAttempt;
 use IRMessage\Contracts\Factory;
 
 class OTPService
 {
+    use ThrottleAttempt;
+
     public static $messageBodyCallback;
 
     public static $messageArgsCallback;
@@ -16,11 +19,19 @@ class OTPService
 
     public function send($countryCode, $phoneNumber)
     {
+        if ($this->hasTooManyAttempts($countryCode, $phoneNumber)) {
+            $this->fireThrottleEvent($countryCode, $phoneNumber);
+
+            return $this->sendThrottleResponse($countryCode, $phoneNumber);
+        }
+
         $recipients = ["{$countryCode}{$phoneNumber}"];
         $messageBody = $this->getMessageBody();
         $messageArgs = $this->getMessageArgs();
 
         $this->messageManager->send($recipients, $messageBody, $messageArgs);
+
+        $this->incrementAttempts($countryCode, $phoneNumber);
     }
 
     public function message(): Factory
