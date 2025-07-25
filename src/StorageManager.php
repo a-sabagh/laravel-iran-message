@@ -14,8 +14,8 @@ class StorageManager extends Manager implements StorageFactory
         return new DatabaseStorage;
     }
 
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
-        $this->config->get('irmessage.defaults.storage');
+        return $this->config->get('irmessage.defaults.storage');
     }
 }
