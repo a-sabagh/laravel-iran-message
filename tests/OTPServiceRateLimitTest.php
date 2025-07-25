@@ -6,7 +6,6 @@ use Illuminate\Validation\ValidationException;
 use IRMessage\Contracts\Factory;
 use IRMessage\Facades\OTP;
 use IRMessage\MessageServiceProvider;
-use Orchestra\Testbench\Attributes\WithEnv;
 use Orchestra\Testbench\TestCase;
 
 class OTPServiceRateLimitTest extends TestCase
