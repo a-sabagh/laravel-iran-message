@@ -2,7 +2,6 @@
 
 namespace IRMessage\Tests;
 
-use IRMessage\Concerns\ThrottleAttempt;
 use IRMessage\Contracts\Factory;
 use IRMessage\Facades\OTP;
 use IRMessage\MessageManager;
@@ -12,8 +11,6 @@ use Orchestra\Testbench\TestCase;
 
 class OTPServiceTest extends TestCase
 {
-    use ThrottleAttempt;
-
     protected function getPackageProviders($app): array
     {
         return [
