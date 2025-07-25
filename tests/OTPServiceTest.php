@@ -52,13 +52,15 @@ class OTPServiceTest extends TestCase
 
     public function test_customize_otp_service_message_args(): void
     {
+        $code = rand(999, 100);
+
         $expectedMessageArgs = [
-            'verification-code' => rand(999, 100),
+            'verification-code' => $code,
         ];
 
-        OTP::messageArgsUsing(fn () => $expectedMessageArgs);
+        OTP::messageArgsUsing(fn ($code) => $expectedMessageArgs);
 
-        $actualMessageArgs = OTP::getMessageArgs();
+        $actualMessageArgs = OTP::getMessageArgs($code);
 
         $this->assertEquals($expectedMessageArgs, $actualMessageArgs);
     }
@@ -66,19 +68,24 @@ class OTPServiceTest extends TestCase
     #[WithConfig('cache.default', 'array')]
     public function test_otp_service_send(): void
     {
+        $code = rand(999, 100);
         $countryCode = '98';
         $phoneNumber = '9000000000';
         $recipients = ["{$countryCode}{$phoneNumber}"];
 
         $messageManager = $this->mock(Factory::class);
 
+        $this
+            ->mock(OTPService::class)
+            ->makePartial()
+            ->shouldReceive('getCode')
+            ->andReturn($code);
+
         $message = 'one-time-password';
         OTP::messageBodyUsing(fn () => $message);
 
-        $args = [
-            'verification-code' => rand(999, 100),
-        ];
-        OTP::messageArgsUsing(fn () => $args);
+        $args = ['verification-code' => $code];
+        OTP::messageArgsUsing(fn ($code) => $args);
 
         $messageManager
             ->shouldReceive('send')

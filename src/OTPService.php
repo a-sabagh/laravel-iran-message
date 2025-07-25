@@ -27,9 +27,10 @@ class OTPService
             return $this->sendThrottleResponse($countryCode, $phoneNumber);
         }
 
+        $code = $this->getCode();
         $recipients = ["{$countryCode}{$phoneNumber}"];
         $messageBody = $this->getMessageBody();
-        $messageArgs = $this->getMessageArgs();
+        $messageArgs = $this->getMessageArgs($code);
 
         $this->messageManager->send($recipients, $messageBody, $messageArgs);
 
@@ -55,15 +56,18 @@ class OTPService
         return 'otp';
     }
 
-    public function getMessageArgs(): array
+    public function getCode(): int
+    {
+        return rand(9999, 1000);
+    }
+
+    public function getMessageArgs($code): array
     {
         if (is_callable(static::$messageArgsCallback)) {
-            return call_user_func(static::$messageArgsCallback);
+            return call_user_func(static::$messageArgsCallback, [$code]);
         }
 
-        $verificationCode = rand(9999, 1000);
-
-        return ['verification_code' => $verificationCode];
+        return ['verification_code' => $code];
     }
 
     public static function messageBodyUsing($callback): void
