@@ -12,7 +12,7 @@ return new class extends Migration
             $table->mediumInteger('country_code')->default(98);
             $table->string('phone_no', 20);
             $table->string('otp', 255);
-            $table->dateTime('time')->useCurrent();
+            $table->dateTime('available_in')->default(now()->addMinutes(2));
 
             $table->primary(['country_code', 'phone_no']);
         });
