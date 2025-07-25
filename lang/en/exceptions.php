@@ -12,6 +12,6 @@ return [
     */
 
     'otp' => [
-        'throttle' => 'Too Many OTP Request attempt, the next attempt is available in :meniutes and :second'
-    ]
+        'throttle' => 'Too Many OTP Request attempt, the next attempt is available in :meniutes and :second',
+    ],
 ];

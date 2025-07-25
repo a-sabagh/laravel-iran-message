@@ -2,8 +2,8 @@
 
 namespace IRMessage\Concerns;
 
-use Illuminate\Http\Response;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
 use IRMessage\Events\TooManyOTPRequest;
