@@ -45,4 +45,29 @@ class OTPServiceRateLimitTest extends TestCase
 
         OTP::send($countryCode, $phoneNumber);
     }
+
+    public function test_otp_service_send_threshold_was_reset_on_decay_time(): void
+    {
+        $countryCode = '98';
+        $phoneNumber = fake()->numerify('9#########');
+
+        $messageManager = $this->mock(Factory::class);
+
+        $messageManager
+            ->shouldReceive('send')
+            ->andReturn(false);
+
+        $decayMinutes = OTP::decayMinutes();
+
+        OTP::send($countryCode, $phoneNumber);
+
+        $this->travel($decayMinutes + 1)->minute();
+
+        $messageManager
+            ->shouldNotReceive('send');
+
+        OTP::send($countryCode, $phoneNumber);
+
+        $this->addToAssertionCount(1);
+    }
 }
