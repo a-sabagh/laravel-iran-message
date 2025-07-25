@@ -4,8 +4,11 @@ namespace IRMessage\Tests;
 
 use Illuminate\Validation\ValidationException;
 use IRMessage\Contracts\Factory;
+use IRMessage\Contracts\StorageFactory;
 use IRMessage\Facades\OTP;
 use IRMessage\MessageServiceProvider;
+use IRMessage\OTPService;
+use Mockery;
 use Orchestra\Testbench\TestCase;
 
 class OTPServiceRateLimitTest extends TestCase
@@ -29,17 +32,21 @@ class OTPServiceRateLimitTest extends TestCase
         $countryCode = '98';
         $phoneNumber = fake()->numerify('9#########');
 
-        $messageManager = $this->mock(Factory::class);
+        $messageManagerMock = Mockery::mock(Factory::class);
+        $storageManagerMock = Mockery::mock(StorageFactory::class);
 
-        $messageManager
-            ->shouldReceive('send')
-            ->andReturn(false);
+        $messageManagerMock->shouldReceive('send');
+        $storageManagerMock->shouldReceive('store');
+
+        $otpServiceMock = Mockery::mock(OTPService::class, [$messageManagerMock, $storageManagerMock])->makePartial();
+
+        $this->app->instance('irmessage.otp', $otpServiceMock);
 
         OTP::send($countryCode, $phoneNumber);
 
         $this->travel(5)->second();
 
-        $messageManager
+        $messageManagerMock
             ->shouldNotReceive('send');
 
         OTP::send($countryCode, $phoneNumber);
@@ -50,20 +57,21 @@ class OTPServiceRateLimitTest extends TestCase
         $countryCode = '98';
         $phoneNumber = fake()->numerify('9#########');
 
-        $messageManager = $this->mock(Factory::class);
+        $messageManagerMock = Mockery::mock(Factory::class);
+        $storageManagerMock = Mockery::mock(StorageFactory::class);
 
-        $messageManager
-            ->shouldReceive('send')
-            ->andReturn(false);
+        $messageManagerMock->shouldReceive('send');
+        $storageManagerMock->shouldReceive('store');
+
+        $otpServiceMock = Mockery::mock(OTPService::class, [$messageManagerMock, $storageManagerMock])->makePartial();
+
+        $this->app->instance('irmessage.otp', $otpServiceMock);
 
         $decayMinutes = OTP::decayMinutes();
 
         OTP::send($countryCode, $phoneNumber);
 
         $this->travel($decayMinutes + 1)->minute();
-
-        $messageManager
-            ->shouldNotReceive('send');
 
         OTP::send($countryCode, $phoneNumber);
 

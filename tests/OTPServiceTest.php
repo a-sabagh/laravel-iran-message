@@ -3,11 +3,13 @@
 namespace IRMessage\Tests;
 
 use IRMessage\Contracts\Factory;
+use IRMessage\Contracts\StorageFactory;
 use IRMessage\Facades\OTP;
 use IRMessage\MessageManager;
 use IRMessage\MessageServiceProvider;
 use IRMessage\OTPService;
 use IRMessage\StorageManager;
+use Mockery;
 use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\TestCase;
 
@@ -68,18 +70,17 @@ class OTPServiceTest extends TestCase
     #[WithConfig('cache.default', 'array')]
     public function test_otp_service_send_message_behaviour(): void
     {
-        $code = rand(999, 100);
+        $code = 1234;
         $countryCode = '98';
         $phoneNumber = '9000000000';
         $recipients = ["{$countryCode}{$phoneNumber}"];
 
-        $messageManager = $this->mock(Factory::class);
+        $messageManagerMock = Mockery::mock(Factory::class);
+        $storageManagerMock = Mockery::mock(StorageFactory::class);
 
-        $this
-            ->mock(OTPService::class)
-            ->makePartial()
-            ->shouldReceive('getCode')
-            ->andReturn($code);
+        $otpServiceMock = Mockery::mock(OTPService::class, [$messageManagerMock, $storageManagerMock])->makePartial();
+
+        $this->app->instance('irmessage.otp', $otpServiceMock);
 
         $message = 'one-time-password';
         OTP::messageBodyUsing(fn () => $message);
@@ -87,7 +88,10 @@ class OTPServiceTest extends TestCase
         $args = ['verification-code' => $code];
         OTP::messageArgsUsing(fn ($code) => $args);
 
-        $messageManager
+        $storageManagerMock
+            ->shouldReceive('store');
+
+        $messageManagerMock
             ->shouldReceive('send')
             ->once()
             ->with($recipients, $message, $args);
