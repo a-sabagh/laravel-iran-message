@@ -66,7 +66,7 @@ class OTPServiceTest extends TestCase
     }
 
     #[WithConfig('cache.default', 'array')]
-    public function test_otp_service_send(): void
+    public function test_otp_service_send_message_behaviour(): void
     {
         $code = rand(999, 100);
         $countryCode = '98';
