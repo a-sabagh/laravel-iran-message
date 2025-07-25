@@ -15,7 +15,7 @@ class MessageManager extends Manager implements Factory
 {
     public function getDefaultDriver()
     {
-        return $this->config['irmessage']['default'];
+        return $this->config['irmessage']['defaults']['message'];
     }
 
     public function createLogDriver(): Driver

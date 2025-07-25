@@ -42,7 +42,7 @@ class MessageServiceTest extends TestCase
 
     public function test_message_manager_default_config(): void
     {
-        $this->app->config->set('irmessage.default', 'log');
+        $this->app->config->set('irmessage.defaults.message', 'log');
 
         $defaultDriver = $this->app->make(Factory::class)->getDefaultDriver();
 
@@ -58,7 +58,7 @@ class MessageServiceTest extends TestCase
 
     public function test_instanciate_default_driver(): void
     {
-        $this->app->config->set('irmessage.default', 'log');
+        $this->app->config->set('irmessage.defaults.message', 'log');
 
         $defaultDriver = $this->app->make(Factory::class)->driver();
 

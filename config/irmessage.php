@@ -10,7 +10,10 @@ return [
     | You can switch to a another driver at runtime using strategy design pattern.
     |
     */
-    'default' => env('IRMESSAGE_DRIVER', 'textlocal'),
+    'defaults' => [
+        'message' => env('IRMESSAGE_DRIVER', 'array'),
+        'storage' => env('IRMESSAGE_STORAGE', 'database')
+    ],
 
     /*
     |--------------------------------------------------------------------------
