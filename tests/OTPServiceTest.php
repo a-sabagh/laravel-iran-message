@@ -98,4 +98,39 @@ class OTPServiceTest extends TestCase
 
         OTP::send($countryCode, $phoneNumber);
     }
+
+    #[WithConfig('cache.default', 'array')]
+    public function test_otp_service_send_storage_behaviour(): void
+    {
+        $code = 12345;
+        $decayMinutes = 5;
+        $countryCode = '98';
+        $phoneNumber = fake()->numerify('9#########');
+
+        $messageManagerMock = Mockery::mock(Factory::class);
+        $storageManagerMock = Mockery::mock(StorageFactory::class);
+
+        $otpServiceMock = Mockery::mock(OTPService::class, [$messageManagerMock, $storageManagerMock])->makePartial();
+
+        $otpServiceMock
+            ->shouldReceive('getCode')
+            ->once()
+            ->andReturn($code);
+
+        $otpServiceMock
+            ->shouldReceive('decayMinutes')
+            ->once()
+            ->andReturn($decayMinutes);
+
+        $this->app->instance('irmessage.otp', $otpServiceMock);
+
+        $messageManagerMock->shouldReceive('send');
+
+        $storageManagerMock
+            ->shouldReceive('store')
+            ->once()
+            ->with($countryCode, $phoneNumber, $code, $decayMinutes);
+
+        OTP::send($countryCode, $phoneNumber);
+    }
 }
