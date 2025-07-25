@@ -7,6 +7,7 @@ use IRMessage\Facades\OTP;
 use IRMessage\MessageManager;
 use IRMessage\MessageServiceProvider;
 use IRMessage\OTPService;
+use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\TestCase;
 
 class OTPServiceTest extends TestCase
@@ -59,6 +60,7 @@ class OTPServiceTest extends TestCase
         $this->assertEquals($expectedMessageArgs, $actualMessageArgs);
     }
 
+    #[WithConfig('cache.default', 'array')]
     public function test_otp_service_send(): void
     {
         $countryCode = '98';
