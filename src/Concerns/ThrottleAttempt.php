@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
+use IRMessage\Events\TooManyOTPRequest;
 
 trait ThrottleAttempt
 {
@@ -22,6 +23,12 @@ trait ThrottleAttempt
             ])],
         ])->status(Response::HTTP_TOO_MANY_REQUESTS);
     }
+
+    protected function fireTooManyOTPRequestEvent($countryCode, $phoneNumber): void
+    {
+        Event::dispatch(new TooManyOTPRequest($countryCode, $phoneNumber));
+    }
+
     protected function hasTooManyAttempts($phoneNumber, $countryCode)
     {
         return $this->limiter()->tooManyAttempts(
