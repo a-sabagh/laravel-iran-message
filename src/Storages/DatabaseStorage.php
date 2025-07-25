@@ -8,13 +8,13 @@ use IRMessage\Models\OTP;
 
 class DatabaseStorage implements Storage
 {
-    public function store(array $data): bool
+    public function store(int $countryCode, int $phoneNumber, int $code, int $decayMinutes): bool
     {
-        $otp = Hash::make($data['otp']);
+        $otpHashed = Hash::make($code);
 
         return OTP::updateOrInsert(
-            ['country_code' => $data['country_code'], 'phone_no' => $data['phone_no']],
-            ['otp' => $otp, 'expire_at' => $data['expire_at']]
+            ['country_code' => $countryCode, 'phone_no' => $phoneNumber],
+            ['otp' => $otpHashed, 'expire_at' => now()->addMinutes($decayMinutes)]
         );
     }
 }
