@@ -2,9 +2,11 @@
 
 namespace IRMessage;
 
+use Illuminate\Support\Facades\Event;
 use IRMessage\Concerns\ThrottleAttempt;
 use IRMessage\Contracts\Factory;
 use IRMessage\Contracts\StorageFactory;
+use IRMessage\Events\OTPRequestSend;
 
 class OTPService
 {
@@ -39,6 +41,8 @@ class OTPService
         $this->storage()->store($countryCode, $phoneNumber, $code, $decayMinutes);
 
         $this->incrementAttempts($countryCode, $phoneNumber);
+
+        Event::dispatch(new OTPRequestSend($phoneNumber, $countryCode, $code));
     }
 
     public function message(): Factory
