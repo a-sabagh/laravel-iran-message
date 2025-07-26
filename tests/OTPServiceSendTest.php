@@ -14,7 +14,7 @@ use Mockery;
 use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\TestCase;
 
-class OTPServiceTest extends TestCase
+class OTPServiceSendTest extends TestCase
 {
     protected function setUp(): void
     {
