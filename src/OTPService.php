@@ -3,6 +3,7 @@
 namespace IRMessage;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
 use IRMessage\Concerns\ThrottleAttempt;
 use IRMessage\Contracts\Factory;
 use IRMessage\Contracts\StorageFactory;
@@ -43,6 +44,20 @@ class OTPService
         $this->incrementAttempts($countryCode, $phoneNumber);
 
         Event::dispatch(new OTPRequestSend($phoneNumber, $countryCode, $code));
+    }
+
+    public function verify($countryCode, $phoneNumber, $code): bool
+    {
+        $otp = $this->storage()->pull($countryCode, $phoneNumber);
+
+        if (! $otp) {
+            return false;
+        }
+
+        $isNotExpired = isset($otp['available_in']) && $otp['available_in'] >= now();
+        $isCodeValid = isset($otp['code']) && Hash::check($code, $otp['code']);
+
+        return $isNotExpired && $isCodeValid;
     }
 
     public function message(): Factory
