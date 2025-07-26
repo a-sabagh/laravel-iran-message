@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('phone_otps', function (Blueprint $table) {
             $table->mediumInteger('country_code')->default(98);
             $table->string('phone_no', 20);
-            $table->string('otp', 255);
+            $table->string('code', 255);
             $table->dateTime('available_in')->default(now()->addMinutes(2));
 
             $table->primary(['country_code', 'phone_no']);

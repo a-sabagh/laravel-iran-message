@@ -17,7 +17,7 @@ class OTPFactory extends Factory
         return [
             'country_code' => 98,
             'phone_no' => fake()->unique()->numerify('9#########'),
-            'otp' => Hash::make($otp),
+            'code' => Hash::make($otp),
             'available_in' => now()->addMinute(),
         ];
     }

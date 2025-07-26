@@ -23,8 +23,8 @@ class OTP extends Model
     protected $fillable = [
         'country_code',
         'phone_no',
-        'otp',
-        'time',
+        'code',
+        'available_in',
     ];
 
     public static function newFactory()
