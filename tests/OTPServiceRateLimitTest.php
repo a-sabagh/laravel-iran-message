@@ -2,6 +2,7 @@
 
 namespace IRMessage\Tests;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\ValidationException;
 use IRMessage\Contracts\Factory;
 use IRMessage\Contracts\StorageFactory;
@@ -13,6 +14,13 @@ use Orchestra\Testbench\TestCase;
 
 class OTPServiceRateLimitTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Event::fake();
+    }
+
     protected function getPackageProviders($app)
     {
         return [

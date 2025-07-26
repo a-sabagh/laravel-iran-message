@@ -2,6 +2,7 @@
 
 namespace IRMessage\Tests;
 
+use Illuminate\Support\Facades\Event;
 use IRMessage\Contracts\Factory;
 use IRMessage\Contracts\StorageFactory;
 use IRMessage\Facades\OTP;
@@ -15,6 +16,13 @@ use Orchestra\Testbench\TestCase;
 
 class OTPServiceTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Event::fake();
+    }
+
     protected function getPackageProviders($app): array
     {
         return [
