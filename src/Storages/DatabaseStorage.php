@@ -17,4 +17,9 @@ class DatabaseStorage implements Storage
             ['code' => $codeHashed, 'available_in' => now()->addMinutes($decayMinutes)]
         );
     }
+
+    public function pull($countryCode, $phoneNumber)
+    {
+        return OTP::phone($phoneNumber)->first();
+    }
 }
