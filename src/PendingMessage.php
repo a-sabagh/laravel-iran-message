@@ -41,11 +41,6 @@ class PendingMessage
      */
     protected $args = [];
 
-    public function __construct(Factory $manager)
-    {
-        $this->manager = $manager;
-    }
-
     public function to($recipients): self
     {
         $this->recipients = is_array($recipients) ? $recipients : func_get_args();
@@ -76,6 +71,6 @@ class PendingMessage
 
     public function send(): mixed
     {
-        return $this->manager->driver()->send($this->recipients, $this->message, $this->from, $this->args);
+        return app(Factory::class)->driver()->send($this->recipients, $this->message, $this->from, $this->args);
     }
 }
