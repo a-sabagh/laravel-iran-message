@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notification;
 use IRMessage\Channels\MessageChannel;
 use IRMessage\MessageServiceProvider;
 use IRMessage\Tests\Stubs\UserStub;
+use Mockery\MockInterface;
 use Orchestra\Testbench\TestCase;
 
 class MessageChannelTest extends TestCase
@@ -29,12 +30,21 @@ class MessageChannelTest extends TestCase
     {
         $userConfiguredStub = new UserStub;
 
-        $notificationMock = $this->mock(Notification::class)->makePartial();
+        $notificationMock = $this->mock(
+            Notification::class,
+            function (MockInterface $mock) use ($userConfiguredStub) {
+                $mock
+                    ->shouldReceive('via')
+                    ->with($userConfiguredStub)
+                    ->andReturn(['message']);
 
-        $notificationMock
-            ->shouldReceive('via')
-            ->with($userConfiguredStub)
-            ->andReturn(['message']);
+                $mock
+                    ->shouldReceive('toMessage')
+                    ->with($userConfiguredStub)
+                    ->andReturnSelf()
+                    ->shouldReceive('send');
+            }
+        );
 
         $this
             ->mock(MessageChannel::class)
