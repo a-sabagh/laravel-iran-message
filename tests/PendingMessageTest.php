@@ -22,7 +22,7 @@ class PendingMessageTest extends TestCase
                     ->shouldReceive('driver')
                     ->andReturnSelf()
                     ->shouldReceive('send')
-                    ->with($recipients, $message, $from, $args)
+                    ->with($recipients, $message, $args, $from)
                     ->andReturn(true)
             );
 

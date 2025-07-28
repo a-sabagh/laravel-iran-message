@@ -30,9 +30,9 @@ class PendingMessage
     /**
      * The "message" body;
      *
-     * @var array
+     * @var string
      */
-    protected $message = [];
+    protected $message;
 
     /**
      * The "args" for compiling with message body.
@@ -71,6 +71,6 @@ class PendingMessage
 
     public function send(): mixed
     {
-        return app(Factory::class)->driver()->send($this->recipients, $this->message, $this->from, $this->args);
+        return app(Factory::class)->driver()->send($this->recipients, $this->message, $this->args, $this->from);
     }
 }
