@@ -93,6 +93,16 @@ class MessageServiceTest extends TestCase
     public function test_instanciate_throws_missing_configuration(): void
     {
         $this->app->config->set('irmessage.drivers.array', null);
+
+        $this->expectException(DriverMissingConfigurationException::class);
+
+        $this->app->make(Factory::class)->driver('array');
+    }
+
+    public function test_instanciate_throws_empty_configuration(): void
+    {
+        $this->app->config->set('irmessage.drivers.array', []);
+
         $this->expectException(DriverMissingConfigurationException::class);
 
         $this->app->make(Factory::class)->driver('array');
