@@ -3,10 +3,11 @@
 namespace IRMessage\Drivers;
 
 use Illuminate\Support\Collection;
+use IRMessage\Contracts\ConfigurableDriver;
 use IRMessage\Contracts\Driver;
 use Stringable;
 
-class ArrayDriver implements Driver, Stringable
+class ArrayDriver implements ConfigurableDriver, Driver, Stringable
 {
     /**
      * The collection of default configuration for array driver.

@@ -4,11 +4,12 @@ namespace IRMessage\Drivers;
 
 use Illuminate\Support\Collection;
 use IRMessage\Concerns\TranslatableMessage;
+use IRMessage\Contracts\ConfigurableDriver;
 use IRMessage\Contracts\Driver;
 use Psr\Log\LoggerInterface;
 use Stringable;
 
-class LogDriver implements Driver, Stringable
+class LogDriver implements ConfigurableDriver, Driver, Stringable
 {
     use TranslatableMessage;
 

@@ -5,9 +5,10 @@ namespace IRMessage\Drivers;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use IRMessage\Concerns\TranslatableMessage;
+use IRMessage\Contracts\ConfigurableDriver;
 use IRMessage\Contracts\Driver;
 
-class IPPanelDriver implements Driver
+class IPPanelDriver implements ConfigurableDriver, Driver
 {
     use TranslatableMessage;
 
