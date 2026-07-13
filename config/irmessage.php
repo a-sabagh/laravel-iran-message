@@ -12,7 +12,7 @@ return [
     */
     'defaults' => [
         'message' => env('IRMESSAGE_DRIVER', 'array'),
-        'storage' => env('IRMESSAGE_STORAGE', 'database')
+        'storage' => env('IRMESSAGE_STORAGE', 'database'),
     ],
 
     /*
@@ -27,9 +27,13 @@ return [
     */
     'drivers' => [
         'ippanel' => [
-            'username' => 'Your Username',
-            'password' => 'Your Password',
-            'from' => 'Your Default From Number',
+            'token' => env('IRMESSAGE_IPPANEL_TOKEN', null),
+            'username' => env('IRMESSAGE_IPPANEL_USERNAME', null),
+            'password' => env('IRMESSAGE_IPPANEL_PASSWORD', null),
+            'from' => env('IRMESSAGE_IPPANEL_FROM', '3000505'),
+        ],
+        'array' => [
+            'lang' => 'array',
         ],
     ],
 
