@@ -28,9 +28,10 @@ return [
     'drivers' => [
         'ippanel' => [
             'token' => env('IRMESSAGE_IPPANEL_TOKEN', null),
+            'lang' => env('IRMESSAGE_IPPANEL_LANG', 'ippanel_pattern'),
             'username' => env('IRMESSAGE_IPPANEL_USERNAME', null),
             'password' => env('IRMESSAGE_IPPANEL_PASSWORD', null),
-            'from' => env('IRMESSAGE_IPPANEL_FROM', '3000505'),
+            'from' => env('IRMESSAGE_IPPANEL_FROM', null),
         ],
         'array' => [
             'lang' => 'array',
